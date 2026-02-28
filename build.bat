@@ -1,173 +1,144 @@
 @echo off
-chcp 65001 >nul
+chcp 936 >nul
 setlocal enabledelayedexpansion
 
 echo.
-echo ╔════════════════════════════════════════════════════════════╗
-echo ║           扫码小助手 - 自动打包工具 v2.0                    ║
-echo ╚════════════════════════════════════════════════════════════╝
+echo ============================================
+echo    ɨ��С���� - �Զ�������� v3.0
+echo ============================================
 echo.
 
 set "PROJECT_DIR=%~dp0"
 cd /d "%PROJECT_DIR%"
 
-echo [步骤 1/7] 检查运行环境
-echo ────────────────────────────────────────────────────────────
+echo [���� 1/6] ������л���
+echo --------------------------------------------
 
 python --version >nul 2>&1
 if errorlevel 1 (
-    echo [错误] 未找到 Python，请先安装 Python 3.8+
-    echo 下载地址: https://www.python.org/downloads/
+    echo [����] δ�ҵ� Python�����Ȱ�װ Python 3.8+
+    echo ���ص�ַ: https://www.python.org/downloads/
     pause
     exit /b 1
 )
 for /f "tokens=2" %%i in ('python --version 2^>^&1') do set PYTHON_VER=%%i
-echo [OK] Python 版本: %PYTHON_VER%
+echo [OK] Python �汾: %PYTHON_VER%
 
 echo.
-echo [步骤 2/7] 检查必要文件
-echo ────────────────────────────────────────────────────────────
+echo [���� 2/6] ����Ҫ�ļ�
+echo --------------------------------------------
 
-set "REQUIRED_FILES=scanner_system.py scanner.py config_loader.py product_manager.py config.json products.csv"
-set "MISSING_FILES="
-
-for %%f in (%REQUIRED_FILES%) do (
-    if not exist "%%f" (
-        set "MISSING_FILES=!MISSING_FILES! %%f"
-    )
-)
-
-if defined MISSING_FILES (
-    echo [错误] 缺少必要文件:!MISSING_FILES!
+if not exist "ɨ��С����.spec" (
+    echo [����] δ�ҵ� ɨ��С����.spec �ļ�
     pause
     exit /b 1
 )
-echo [OK] 所有必要文件存在
+if not exist "scanner_app\main.py" (
+    echo [����] δ�ҵ� scanner_app\main.py ����ļ�
+    pause
+    exit /b 1
+)
+if not exist "config.json" (
+    echo [����] δ�ҵ� config.json �����ļ�
+    pause
+    exit /b 1
+)
+if not exist "products.csv" (
+    echo [����] δ�ҵ� products.csv ��Ʒ�����ļ�
+    pause
+    exit /b 1
+)
+echo [OK] ���б�Ҫ�ļ�����
 
 echo.
-echo [步骤 3/7] 检查并安装 PyInstaller
-echo ────────────────────────────────────────────────────────────
+echo [���� 3/6] ��鲢��װ PyInstaller
+echo --------------------------------------------
 
 python -c "import PyInstaller; print(PyInstaller.__version__)" >nul 2>&1
 if errorlevel 1 (
-    echo [INFO] 正在安装 PyInstaller...
+    echo [INFO] ���ڰ�װ PyInstaller...
     python -m pip install pyinstaller --upgrade -q
     if errorlevel 1 (
-        echo [错误] PyInstaller 安装失败
+        echo [����] PyInstaller ��װʧ��
         pause
         exit /b 1
     )
 )
 for /f "tokens=*" %%i in ('python -c "import PyInstaller; print(PyInstaller.__version__)"') do set PYINSTALLER_VER=%%i
-echo [OK] PyInstaller 版本: %PYINSTALLER_VER%
+echo [OK] PyInstaller �汾: %PYINSTALLER_VER%
 
 echo.
-echo [步骤 4/7] 选择打包模式
-echo ────────────────────────────────────────────────────────────
-echo  1. 文件夹模式 (推荐) - 启动快，便于调试
-echo  2. 单文件模式 - 便于分发，启动较慢
-echo.
-set /p BUILD_MODE="请选择 (1/2, 默认1): "
-if "%BUILD_MODE%"=="" set BUILD_MODE=1
+echo [���� 4/6] �����ɵĹ����ļ�
+echo --------------------------------------------
 
-if "%BUILD_MODE%"=="1" (
-    set "BUILD_ARGS="
-    set "MODE_NAME=文件夹模式"
-) else (
-    set "BUILD_ARGS=--onefile"
-    set "MODE_NAME=单文件模式"
-)
-echo [OK] 已选择: %MODE_NAME%
-
-echo.
-echo [步骤 5/7] 清理旧的构建文件
-echo ────────────────────────────────────────────────────────────
-
-if exist "dist\扫码小助手" (
-    echo [INFO] 正在删除旧的输出目录...
-    rmdir /s /q "dist\扫码小助手" 2>nul
+if exist "dist\ɨ��С����" (
+    echo [INFO] ����ɾ���ɵ����Ŀ¼...
+    rmdir /s /q "dist\ɨ��С����" 2>nul
 )
 if exist "build" (
-    echo [INFO] 正在删除临时构建目录...
+    echo [INFO] ����ɾ����ʱ����Ŀ¼...
     rmdir /s /q "build" 2>nul
 )
-if exist "扫码小助手.spec" (
-    del /q "扫码小助手.spec" 2>nul
-)
-echo [OK] 清理完成
+echo [OK] �������
 
 echo.
-echo [步骤 6/7] 执行打包
-echo ────────────────────────────────────────────────────────────
-echo [INFO] 正在打包，请稍候...
+echo [���� 5/6] ִ�д��
+echo --------------------------------------------
+echo [INFO] ���ڴ�������Ժ�...
+echo [INFO] ʹ�� spec �����ļ�: ɨ��С����.spec
 
-python -m PyInstaller %BUILD_ARGS% --clean --distpath "dist" --workpath "build" ^
-    --name "扫码小助手" ^
-    --windowed ^
-    --add-data "config.json;." ^
-    --add-data "products.csv;." ^
-    --hidden-import=pyttsx3 ^
-    --hidden-import=pyttsx3.drivers ^
-    --hidden-import=pyttsx3.drivers.sapi5 ^
-    --hidden-import=edge_tts ^
-    --hidden-import=pygame ^
-    --hidden-import=serial ^
-    --hidden-import=keyboard ^
-    --hidden-import=tkinter ^
-    --hidden-import=tkinter.ttk ^
-    --collect-all edge_tts ^
-    scanner_system.py
+python -m PyInstaller --clean "ɨ��С����.spec"
 
 if errorlevel 1 (
     echo.
-    echo [错误] 打包失败！
-    echo 请检查错误信息并修复问题后重试
+    echo [����] ���ʧ�ܣ�
+    echo ���������Ϣ���޸����������
     pause
     exit /b 1
 )
 
-echo [OK] 打包完成
+echo [OK] ������
 
 echo.
-echo [步骤 7/7] 复制语音缓存和配置文件
-echo ────────────────────────────────────────────────────────────
+echo [���� 6/6] ������������������ļ�
+echo --------------------------------------------
 
 if exist "voice_cache" (
-    echo [INFO] 正在复制语音缓存...
-    xcopy /E /I /Y /Q "voice_cache" "dist\扫码小助手\voice_cache" >nul
-    for /f %%i in ('dir /b "dist\扫码小助手\voice_cache\*.mp3" 2^>nul ^| find /c /v ""') do set CACHE_COUNT=%%i
-    echo [OK] 已复制 !CACHE_COUNT! 个语音缓存文件
+    echo [INFO] ���ڸ�����������...
+    xcopy /E /I /Y /Q "voice_cache" "dist\ɨ��С����\voice_cache" >nul
+    for /f %%i in ('dir /b "dist\ɨ��С����\voice_cache\*.mp3" 2^>nul ^| find /c /v ""') do set CACHE_COUNT=%%i
+    echo [OK] �Ѹ��� !CACHE_COUNT! �����������ļ�
 ) else (
-    echo [WARN] 未找到 voice_cache 目录，跳过
+    echo [WARN] δ�ҵ� voice_cache Ŀ¼������
 )
 
-echo [INFO] 复制配置文件到 exe 目录（便于用户编辑）...
-if exist "dist\扫码小助手\_internal\products.csv" (
-    copy /Y "dist\扫码小助手\_internal\products.csv" "dist\扫码小助手\products.csv" >nul
-    echo [OK] 已复制 products.csv
+echo [INFO] ���������ļ��� exe ͬ��Ŀ¼�������û��༭��...
+if exist "dist\ɨ��С����\_internal\products.csv" (
+    copy /Y "dist\ɨ��С����\_internal\products.csv" "dist\ɨ��С����\products.csv" >nul
+    echo [OK] �Ѹ��� products.csv
 )
-if exist "dist\扫码小助手\_internal\config.json" (
-    copy /Y "dist\扫码小助手\_internal\config.json" "dist\扫码小助手\config.json" >nul
-    echo [OK] 已复制 config.json
+if exist "dist\ɨ��С����\_internal\config.json" (
+    copy /Y "dist\ɨ��С����\_internal\config.json" "dist\ɨ��С����\config.json" >nul
+    echo [OK] �Ѹ��� config.json
 )
 
 echo.
-echo ╔════════════════════════════════════════════════════════════╗
-echo ║                    打包完成！                              ║
-echo ╚════════════════════════════════════════════════════════════╝
+echo ============================================
+echo           �����ɣ�
+echo ============================================
 echo.
-echo  输出目录: %PROJECT_DIR%dist\扫码小助手\
-echo  主程序:   扫码小助手.exe
-echo  配置文件: config.json (可编辑)
-echo  商品配置: products.csv (可用Excel编辑)
+echo  ���Ŀ¼: %PROJECT_DIR%dist\ɨ��С����\
+echo  ������:   ɨ��С����.exe
+echo  �����ļ�: config.json (�ɱ༭)
+echo  ��Ʒ����: products.csv (����Excel�༭)
 echo.
-echo  使用说明:
-echo  1. 将整个 "扫码小助手" 文件夹复制到目标电脑
-echo  2. 双击 "扫码小助手.exe" 运行程序
-echo  3. 用 Excel 编辑 products.csv 添加商品
-echo  4. 修改 config.json 调整系统配置
+echo  ʹ��˵��:
+echo  1. ������ "ɨ��С����" �ļ��и��Ƶ�Ŀ�����
+echo  2. ˫�� "ɨ��С����.exe" ���г���
+echo  3. �� Excel �༭ products.csv ������Ʒ
+echo  4. �޸� config.json ����ϵͳ����
 echo.
-echo  [注意] 首次运行需要联网下载语音（如缓存不完整）
+echo  [ע��] �״�������Ҫ���������������绺�治������
 echo.
 
 pause
