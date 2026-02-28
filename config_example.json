@@ -1,0 +1,48 @@
+{
+    "SCANNER_CONFIG": {
+        "port": null,
+        "baudrate": 9600,
+        "mode": "keyboard",
+        "timeout": 1
+    },
+    "VOICE_CONFIG": {
+        "use_edge_tts": true,
+        "voice_name": "xiaoxiao",
+        "rate": 0,
+        "volume": 100,
+        "voice_index": 0
+    },
+    "TIMING_CONFIG": {
+        "scan_delay_ms": 0,
+        "queue_check_interval_ms": 10
+    },
+    "RANDOM_MESSAGES": [
+        "一元",
+        "二元",
+        "三元",
+        "四元",
+        "五元",
+        "六元",
+        "七元",
+        "八元",
+        "九元",
+        "十元"
+    ],
+    "CUSTOM_MESSAGES": {
+        "hhttttpp:;////wweeiixxiinn..qqqq..ccoomm//rr//wwkkggddBbZznnEeMm88RrMmrrdd11mm99xx33Qq": "刷卡成功",
+        "http://weixin.qq.com/r/wkgdBZnEM8RMrd1m9x3Q": "刷卡成功",
+        "VIP*": "尊贵会员",
+        "product-*": "商品扫码成功",
+        "regex:^\\d{6}$": "6位数字码",
+        "regex:^https?://.*$": "网站链接"
+    },
+    "PAYMENT_SUCCESS_MESSAGE": "付款成功",
+    "SYSTEM_CONFIG": {
+        "random_mode": true,
+        "repeat_message": false,
+        "exit_key": "esc",
+        "prevent_sleep": true,
+        "enable_accumulation": true,
+        "payment_prefix": "臭宝"
+    }
+}

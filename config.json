@@ -1,0 +1,73 @@
+{
+    "SCANNER_CONFIG": {
+        "port": null,
+        "baudrate": 9600,
+        "mode": "keyboard",
+        "timeout": 1
+    },
+    "VOICE_CONFIG": {
+        "use_edge_tts": true,
+        "voice_name": "xiaoxiao",
+        "rate": 0,
+        "volume": 100,
+        "voice_index": 0
+    },
+    "TIMING_CONFIG": {
+        "scan_delay_ms": 0,
+        "queue_check_interval_ms": 10
+    },
+    "RANDOM_MESSAGES": [
+        "一元",
+        "二元",
+        "三元",
+        "四元",
+        "五元",
+        "六元",
+        "七元",
+        "八元",
+        "九元",
+        "十元"
+    ],
+    "CUSTOM_MESSAGES": {
+        "https://u.wechat.com/EIZhb5dBElM9ZjPaliKl-Ak?s=2": "臭爸刷卡成功",
+        "http://o2o-static.crv.com.cn/crv_download_app/": "臭妈刷卡成功"
+        
+    },
+    "PAYMENT_SUCCESS_MESSAGE": "付款成功",
+    "SYSTEM_CONFIG": {
+        "random_mode": true,
+        "repeat_message": false,
+        "exit_key": "esc",
+        "prevent_sleep": true,
+        "enable_accumulation": true,
+        "payment_prefix": "臭宝",
+        "payment_code_length": 36,
+        "payment_code_patterns": ["^\\d{16,24}$", "^\\d{36}$"]
+    },
+    "BROADCAST_MESSAGES": {
+        "welcome": {
+            "text": "臭宝小超市开业了!欢迎光临！",
+            "icon": "👋",
+            "label": "迎宾",
+            "color": "#B5F2D6"
+        },
+        "special": {
+            "text": "今日特惠商品,土豆1元,辣椒2元!",
+            "icon": "🎉",
+            "label": "特惠",
+            "color": "#FFE5A0"
+        },
+        "notice": {
+            "text": "臭宝！快来上班！",
+            "icon": "💡",
+            "label": "提示",
+            "color": "#B8E0FF"
+        },
+        "search": {
+            "text": "臭宝小超市营业时间已经结束，感谢您的光临与惠顾，我们明天见。",
+            "icon": "📢",
+            "label": "闭店",
+            "color": "#D4B5FF"
+        }
+    }
+}
