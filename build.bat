@@ -4,141 +4,141 @@ setlocal enabledelayedexpansion
 
 echo.
 echo ============================================
-echo    ╔ия┐╜я┐╜╨бя┐╜я┐╜я┐╜я┐╜ - я┐╜╘╢я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ v3.0
+echo    ╔и┬ы╨б╓·╩╓ - ╫╘╢п┤Є░№╣д╛▀ v3.0
 echo ============================================
 echo.
 
 set "PROJECT_DIR=%~dp0"
 cd /d "%PROJECT_DIR%"
 
-echo [я┐╜я┐╜я┐╜я┐╜ 1/6] я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜╨╗я┐╜я┐╜я┐╜
+echo [▓╜╓ш 1/6] ╝ь▓щ╘╦╨╨╗╖╛│
 echo --------------------------------------------
 
 python --version >nul 2>&1
 if errorlevel 1 (
-    echo [я┐╜я┐╜я┐╜я┐╜] ╬┤я┐╜╥╡я┐╜ Pythonя┐╜я┐╜я┐╜я┐╜я┐╜╚░я┐╜╫░ Python 3.8+
-    echo я┐╜я┐╜я┐╜╪╡я┐╜╓╖: https://www.python.org/downloads/
+    echo [┤э╬є] ╬┤╒╥╡╜ Pythonгм╟ы╧╚░▓╫░ Python 3.8+
+    echo ╧┬╘╪╡╪╓╖: https://www.python.org/downloads/
     pause
     exit /b 1
 )
 for /f "tokens=2" %%i in ('python --version 2^>^&1') do set PYTHON_VER=%%i
-echo [OK] Python я┐╜ц▒╛: %PYTHON_VER%
+echo [OK] Python ░ц▒╛: %PYTHON_VER%
 
 echo.
-echo [я┐╜я┐╜я┐╜я┐╜ 2/6] я┐╜я┐╜я┐╜я┐╜╥кя┐╜─╝я┐╜
+echo [▓╜╓ш 2/6] ╝ь▓щ▒╪╥к╬─╝■
 echo --------------------------------------------
 
-if not exist "╔ия┐╜я┐╜╨бя┐╜я┐╜я┐╜я┐╜.spec" (
-    echo [я┐╜я┐╜я┐╜я┐╜] ╬┤я┐╜╥╡я┐╜ ╔ия┐╜я┐╜╨бя┐╜я┐╜я┐╜я┐╜.spec я┐╜─╝я┐╜
+if not exist "╔и┬ы╨б╓·╩╓.spec" (
+    echo [┤э╬є] ╬┤╒╥╡╜ ╔и┬ы╨б╓·╩╓.spec ╬─╝■
     pause
     exit /b 1
 )
 if not exist "scanner_app\main.py" (
-    echo [я┐╜я┐╜я┐╜я┐╜] ╬┤я┐╜╥╡я┐╜ scanner_app\main.py я┐╜я┐╜я┐╜я┐╜─╝я┐╜
+    echo [┤э╬є] ╬┤╒╥╡╜ scanner_app\main.py ╚ы┐┌╬─╝■
     pause
     exit /b 1
 )
 if not exist "config.json" (
-    echo [я┐╜я┐╜я┐╜я┐╜] ╬┤я┐╜╥╡я┐╜ config.json я┐╜я┐╜я┐╜я┐╜я┐╜─╝я┐╜
+    echo [┤э╬є] ╬┤╒╥╡╜ config.json ┼ф╓├╬─╝■
     pause
     exit /b 1
 )
 if not exist "products.csv" (
-    echo [я┐╜я┐╜я┐╜я┐╜] ╬┤я┐╜╥╡я┐╜ products.csv я┐╜я┐╜╞╖я┐╜я┐╜я┐╜я┐╜я┐╜─╝я┐╜
+    echo [┤э╬є] ╬┤╒╥╡╜ products.csv ╔╠╞╖╩¤╛▌╬─╝■
     pause
     exit /b 1
 )
-echo [OK] я┐╜я┐╜я┐╜╨▒я┐╜╥кя┐╜─╝я┐╜я┐╜я┐╜я┐╜я┐╜
+echo [OK] ╦∙╙╨▒╪╥к╬─╝■┤ц╘┌
 
 echo.
-echo [я┐╜я┐╜я┐╜я┐╜ 3/6] я┐╜я┐╜щ▓вя┐╜я┐╜╫░ PyInstaller
+echo [▓╜╓ш 3/6] ╝ь▓щ▓в░▓╫░ PyInstaller
 echo --------------------------------------------
 
 python -c "import PyInstaller; print(PyInstaller.__version__)" >nul 2>&1
 if errorlevel 1 (
-    echo [INFO] я┐╜я┐╜я┐╜┌░я┐╜╫░ PyInstaller...
+    echo [INFO] ╒¤╘┌░▓╫░ PyInstaller...
     python -m pip install pyinstaller --upgrade -q
     if errorlevel 1 (
-        echo [я┐╜я┐╜я┐╜я┐╜] PyInstaller я┐╜я┐╜╫░╩зя┐╜я┐╜
+        echo [┤э╬є] PyInstaller ░▓╫░╩з░▄
         pause
         exit /b 1
     )
 )
 for /f "tokens=*" %%i in ('python -c "import PyInstaller; print(PyInstaller.__version__)"') do set PYINSTALLER_VER=%%i
-echo [OK] PyInstaller я┐╜ц▒╛: %PYINSTALLER_VER%
+echo [OK] PyInstaller ░ц▒╛: %PYINSTALLER_VER%
 
 echo.
-echo [я┐╜я┐╜я┐╜я┐╜ 4/6] я┐╜я┐╜я┐╜я┐╜я┐╜╔╡─╣я┐╜я┐╜я┐╜я┐╜─╝я┐╜
+echo [▓╜╓ш 4/6] ╟х└э╛╔╡─╣╣╜и╬─╝■
 echo --------------------------------------------
 
-if exist "dist\╔ия┐╜я┐╜╨бя┐╜я┐╜я┐╜я┐╜" (
-    echo [INFO] я┐╜я┐╜я┐╜я┐╜╔╛я┐╜я┐╜я┐╜╔╡я┐╜я┐╜я┐╜я┐╜─┐┬╝...
-    rmdir /s /q "dist\╔ия┐╜я┐╜╨бя┐╜я┐╜я┐╜я┐╜" 2>nul
+if exist "dist\╔и┬ы╨б╓·╩╓" (
+    echo [INFO] ╒¤╘┌╔╛│¤╛╔╡─╩ф│Ў─┐┬╝...
+    rmdir /s /q "dist\╔и┬ы╨б╓·╩╓" 2>nul
 )
 if exist "build" (
-    echo [INFO] я┐╜я┐╜я┐╜я┐╜╔╛я┐╜я┐╜я┐╜я┐╜╩▒я┐╜я┐╜я┐╜я┐╜─┐┬╝...
+    echo [INFO] ╒¤╘┌╔╛│¤┴┘╩▒╣╣╜и─┐┬╝...
     rmdir /s /q "build" 2>nul
 )
-echo [OK] я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜
+echo [OK] ╟х└э═ъ│╔
 
 echo.
-echo [я┐╜я┐╜я┐╜я┐╜ 5/6] ╓┤я┐╜╨┤я┐╜я┐╜
+echo [▓╜╓ш 5/6] ╓┤╨╨┤Є░№
 echo --------------------------------------------
-echo [INFO] я┐╜я┐╜я┐╜┌┤я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜╘║я┐╜...
-echo [INFO] ╩╣я┐╜я┐╜ spec я┐╜я┐╜я┐╜я┐╜я┐╜─╝я┐╜: ╔ия┐╜я┐╜╨бя┐╜я┐╜я┐╜я┐╜.spec
+echo [INFO] ╒¤╘┌┤Є░№гм╟ы╔╘║Є...
+echo [INFO] ╩╣╙├ spec ┼ф╓├╬─╝■: ╔и┬ы╨б╓·╩╓.spec
 
-python -m PyInstaller --clean "╔ия┐╜я┐╜╨бя┐╜я┐╜я┐╜я┐╜.spec"
+python -m PyInstaller --clean "╔и┬ы╨б╓·╩╓.spec"
 
 if errorlevel 1 (
     echo.
-    echo [я┐╜я┐╜я┐╜я┐╜] я┐╜я┐╜я┐╜╩зя┐╜▄гя┐╜
-    echo я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜╧вя┐╜я┐╜я┐╜▐╕я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜
+    echo [┤э╬є] ┤Є░№╩з░▄гб
+    echo ╟ы╝ь▓щ┤э╬є╨┼╧в▓в╨▐╕┤╬╩╠т║є╓╪╩╘
     pause
     exit /b 1
 )
 
-echo [OK] я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜
+echo [OK] ┤Є░№═ъ│╔
 
 echo.
-echo [я┐╜я┐╜я┐╜я┐╜ 6/6] я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜─╝я┐╜
+echo [▓╜╓ш 6/6] ╕┤╓╞╙я╥Ї╗║┤ц║═┼ф╓├╬─╝■
 echo --------------------------------------------
 
 if exist "voice_cache" (
-    echo [INFO] я┐╜я┐╜я┐╜┌╕я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜...
-    xcopy /E /I /Y /Q "voice_cache" "dist\╔ия┐╜я┐╜╨бя┐╜я┐╜я┐╜я┐╜\voice_cache" >nul
-    for /f %%i in ('dir /b "dist\╔ия┐╜я┐╜╨бя┐╜я┐╜я┐╜я┐╜\voice_cache\*.mp3" 2^>nul ^| find /c /v ""') do set CACHE_COUNT=%%i
-    echo [OK] я┐╜╤╕я┐╜я┐╜я┐╜ !CACHE_COUNT! я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜─╝я┐╜
+    echo [INFO] ╒¤╘┌╕┤╓╞╙я╥Ї╗║┤ц...
+    xcopy /E /I /Y /Q "voice_cache" "dist\╔и┬ы╨б╓·╩╓\voice_cache" >nul
+    for /f %%i in ('dir /b "dist\╔и┬ы╨б╓·╩╓\voice_cache\*.mp3" 2^>nul ^| find /c /v ""') do set CACHE_COUNT=%%i
+    echo [OK] ╥╤╕┤╓╞ !CACHE_COUNT! ╕Ў╙я╥Ї╗║┤ц╬─╝■
 ) else (
-    echo [WARN] ╬┤я┐╜╥╡я┐╜ voice_cache ─┐┬╝я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜
+    echo [WARN] ╬┤╒╥╡╜ voice_cache ─┐┬╝гм╠°╣¤
 )
 
-echo [INFO] я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜─╝я┐╜я┐╜я┐╜ exe ═мя┐╜я┐╜─┐┬╝я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜├╗я┐╜я┐╜р╝ня┐╜я┐╜...
-if exist "dist\╔ия┐╜я┐╜╨бя┐╜я┐╜я┐╜я┐╜\_internal\products.csv" (
-    copy /Y "dist\╔ия┐╜я┐╜╨бя┐╜я┐╜я┐╜я┐╜\_internal\products.csv" "dist\╔ия┐╜я┐╜╨бя┐╜я┐╜я┐╜я┐╜\products.csv" >nul
-    echo [OK] я┐╜╤╕я┐╜я┐╜я┐╜ products.csv
+echo [INFO] ╕┤╓╞┼ф╓├╬─╝■╡╜ exe ═м╝╢─┐┬╝ги▒у╙┌╙├╗з▒р╝нгй...
+if exist "dist\╔и┬ы╨б╓·╩╓\_internal\products.csv" (
+    copy /Y "dist\╔и┬ы╨б╓·╩╓\_internal\products.csv" "dist\╔и┬ы╨б╓·╩╓\products.csv" >nul
+    echo [OK] ╥╤╕┤╓╞ products.csv
 )
-if exist "dist\╔ия┐╜я┐╜╨бя┐╜я┐╜я┐╜я┐╜\_internal\config.json" (
-    copy /Y "dist\╔ия┐╜я┐╜╨бя┐╜я┐╜я┐╜я┐╜\_internal\config.json" "dist\╔ия┐╜я┐╜╨бя┐╜я┐╜я┐╜я┐╜\config.json" >nul
-    echo [OK] я┐╜╤╕я┐╜я┐╜я┐╜ config.json
+if exist "dist\╔и┬ы╨б╓·╩╓\_internal\config.json" (
+    copy /Y "dist\╔и┬ы╨б╓·╩╓\_internal\config.json" "dist\╔и┬ы╨б╓·╩╓\config.json" >nul
+    echo [OK] ╥╤╕┤╓╞ config.json
 )
 
 echo.
 echo ============================================
-echo           я┐╜я┐╜я┐╜я┐╜я┐╜╔гя┐╜
+echo           ┤Є░№═ъ│╔гб
 echo ============================================
 echo.
-echo  я┐╜я┐╜я┐╜─┐┬╝: %PROJECT_DIR%dist\╔ия┐╜я┐╜╨бя┐╜я┐╜я┐╜я┐╜\
-echo  я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜:   ╔ия┐╜я┐╜╨бя┐╜я┐╜я┐╜я┐╜.exe
-echo  я┐╜я┐╜я┐╜я┐╜я┐╜─╝я┐╜: config.json (я┐╜╔▒р╝н)
-echo  я┐╜я┐╜╞╖я┐╜я┐╜я┐╜я┐╜: products.csv (я┐╜я┐╜я┐╜я┐╜Excelя┐╜р╝н)
+echo  ╩ф│Ў─┐┬╝: %PROJECT_DIR%dist\╔и┬ы╨б╓·╩╓\
+echo  ╓ў│╠╨Є:   ╔и┬ы╨б╓·╩╓.exe
+echo  ┼ф╓├╬─╝■: config.json (┐╔▒р╝н)
+echo  ╔╠╞╖┼ф╓├: products.csv (┐╔╙├Excel▒р╝н)
 echo.
-echo  ╩╣я┐╜я┐╜╦╡я┐╜я┐╜:
-echo  1. я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ "╔ия┐╜я┐╜╨бя┐╜я┐╜я┐╜я┐╜" я┐╜─╝я┐╜я┐╜╨╕я┐╜я┐╜╞╡я┐╜─┐я┐╜я┐╜я┐╜я┐╜я┐╜
-echo  2. ╦ля┐╜я┐╜ "╔ия┐╜я┐╜╨бя┐╜я┐╜я┐╜я┐╜.exe" я┐╜я┐╜я┐╜╨│я┐╜я┐╜я┐╜
-echo  3. я┐╜я┐╜ Excel я┐╜р╝н products.csv я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜╞╖
-echo  4. я┐╜▐╕я┐╜ config.json я┐╜я┐╜я┐╜я┐╜╧╡═│я┐╜я┐╜я┐╜я┐╜
+echo  ╩╣╙├╦╡├ў:
+echo  1. ╜л╒√╕Ў "╔и┬ы╨б╓·╩╓" ╬─╝■╝╨╕┤╓╞╡╜─┐▒ъ╡ч─╘
+echo  2. ╦л╗ў "╔и┬ы╨б╓·╩╓.exe" ╘╦╨╨│╠╨Є
+echo  3. ╙├ Excel ▒р╝н products.csv ╠э╝╙╔╠╞╖
+echo  4. ╨▐╕─ config.json ╡ў╒√╧╡═│┼ф╓├
 echo.
-echo  [╫вя┐╜я┐╜] я┐╜╫┤я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜╥кя┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ч╗║я┐╜ц▓╗я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜
+echo  [╫в╥т] ╩╫┤╬╘╦╨╨╨ш╥к┴к═°╧┬╘╪╙я╥Їги╚ч╗║┤ц▓╗═ъ╒√гй
 echo.
 
 pause
